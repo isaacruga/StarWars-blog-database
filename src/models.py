@@ -26,35 +26,43 @@ class Address(Base):
     person_id = Column(Integer, ForeignKey('person.id'))
     person = relationship(Person)
 
+
 class User(Base):
     __tablename__ = 'user'
     id =  Column(Integer, primary_key=True)
     user_name = Column(String(30),nullable=False)
     password = Column(String(30),nullable=False)
-    
+    fav_planets = relationship(FavPlanets)
+    fav_charact = relationship(FavCharacters)
+
 
 class Planets(Base):
     __tablename__ = 'planets'
     id =  Column(Integer, primary_key=True)
     planet_name = Column(String(30),nullable=False)
+    fav_planets = relationship(FavPlanets)
+
 
     
 class Characters(Base):
     __tablename__ = 'characters'
     id =  Column(Integer, primary_key=True)
     character_name = Column(String(30),nullable=False)
+    fav_characters = relationship(FavCharacters)
 
-class Fav_Planets(Base):
+
+class FavPlanets(Base):
     __tablename__ = 'fav_planets'
     id =  Column(Integer, primary_key=True)
     user_id = Column(String(30), ForeignKey('user.id'))
     planets_id = Column(String(30), ForeignKey('planets.id'))
 
-class Fav_Characters(Base):
+class FavCharacters(Base):
     __tablename__ = 'fav_characters'
     id =  Column(Integer, primary_key=True)
     user_id = Column(String(30), ForeignKey('user.id'))
     charac_id = Column(String(30), ForeignKey('characters.id'))
+
 
 
     def to_dict(self):
